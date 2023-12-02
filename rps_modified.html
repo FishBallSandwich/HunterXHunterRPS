@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> Rock Paper Scissors BS </title>
+    <style>
+        /*
+        .rock-button {
+            background-color: red;
+            color: black;
+            border: outset
+        }
+
+        .paper-button {
+            background-color: yellow;
+            color: black;
+            border: outset
+        }
+
+        .scissors-button {
+            background-color: dodgerblue;
+            color: black;
+            border: outset
+        }
+            */
+
+
+        .rock-button, .paper-button, .scissors-button, .reset-button {
+
+            margin: 10px;
+            cursor: pointer;
+            background-color: transparent;
+            border: 2px solid white;
+
+
+
+            
+        }
+
+        body{
+            background-color: black;
+            color: white;
+            font-family: Arial;            
+        }
+
+        .move-icon{
+            height: 200px;
+            width: 400px;
+
+        }
+
+        .move-button{
+            padding: 100px, 100px;
+            
+        }
+
+        .reset-button {
+            color: white;
+            font-family: Arial;
+            font-weight:bold;
+            font-size: 30px;
+        }
+
+        .title {
+            font-size: 35px;
+            font-weight: bold;
+            font-family: 'Patrick Hand SC', cursive;
+        }
+        .move-description {
+            color: white;
+            font-family: Arial;
+        }
+        .move-title {
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-weight: bold;
+            font-size: 50px;
+        }
+
+        .player-move, .computer-move, .result, .score-record{
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .hunter_img {
+            background-color: transparent;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            margin: 0 auto;
+            width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class= "container"> <img src="hunter_logo.jpg" class="hunter_img"/></div>
+    <p class="title"> HUNTER X HUNTER - Gon's Rock Paper Scissors ジャジャン拳</p>
+
+    <script>
+
+        let playScore = 0;
+        let computerScore = 0;
+        let ties = 0;
+
+        function playGame(playerChoice) {
+            let randNum = Math.random();
+            let computerMove = '';
+
+
+
+            if (randNum >= 0 && randNum < 1 / 3) {
+                computerMove = 'Rock';
+                console.log(computerMove);
+            } else if (randNum >= 1 / 3 && randNum < 2 / 3) {
+                computerMove = 'Paper';
+                console.log(computerMove);
+
+            } else {
+                computerMove = 'Scissors';
+                console.log(computerMove);
+            }
+
+            let result = ''
+            if (computerMove === playerChoice) {
+                console.log('its a tie');
+                console.log(`playScore: ${playScore}, computerScores: ${computerScore}`)
+                ties++;
+                result = 'its a tie'
+            }
+            else if ((playerChoice == 'Rock' && computerMove == 'Scissors') ||
+                (playerChoice == 'Scissors' && computerMove == 'Paper') ||
+                (playerChoice == 'Paper' && computerMove == 'Rock')) {
+                console.log('you won');
+                alert('you won');
+                playScore++;
+                console.log(`playScore: ${playScore}, computerScores: ${computerScore}`);
+                result = 'you won';
+
+            }
+            else {
+                console.log('you lost');
+                alert('you lost')
+                computerScore++;
+                console.log(`playScore: ${playScore}, computerScores: ${computerScore}`)
+                result = 'you lost'
+
+
+            }
+
+            document.getElementById('humanScore').textContent = playScore;
+            document.getElementById('computerScore').textContent = computerScore;
+            document.getElementById('ties').textContent = ties;
+            document.querySelector('.computer-move').innerHTML = `Enemy used ${computerMove}`
+            document.querySelector('.player-move').innerHTML = `You used ${playerChoice}`
+            document.querySelector('.result').innerHTML = result;
+
+            let resultParagraph = document.querySelector('.result');
+            resultParagraph.style.color = getResultColor(result);
+        }
+
+        function getResultColor(result) {
+
+            switch (result) {
+                case 'you won':
+                    return 'green';
+                case 'you lost':
+                    return 'red';
+                case 'its a tie':
+                    return 'yellow';
+
+                default:
+                    return 'yellow';
+
+
+
+            }
+
+
+
+        }
+
+
+
+
+        
+
+
+        function resetScore() {
+
+            playScore = 0;
+            computerScore = 0;
+            ties = 0;
+            console.log(`resetting scores. ties ${ties}, computer${computerScore}, human${playScore}`);
+            document.getElementById('humanScore').textContent = playScore;
+            document.getElementById('computerScore').textContent = computerScore;
+            document.getElementById('ties').textContent = ties;
+
+        }
+
+
+
+    </script>
+
+
+    <button title="Use Rock"
+            class="rock-button"
+            onclick="playGame('Rock')">
+        <p class="move-title ">Rock (ぐう)</p>
+        <img src="rock.jpg" class="move-icon" />
+        <p class="move-description">Gon focuses the aura around his fists using Ko <br> and releases it in a punch engulfed within an intense flame.</p>
+    </button>
+
+
+    <button title="Use Paper" class="paper-button" onclick="playGame('Paper')">
+        <p class="move-title ">Paper(ぱあ)</p>
+        <img src="paper.jpg" class="move-icon" />
+        <p class="move-description">Gon uses his Emission abilities to project <br>his aura towards his enemies as a projectil</p>
+
+    </button>
+    <button title="Use Scissors" class="scissors-button" onclick="playGame('Scissors')">
+        <p class="move-title "> Rock (ちょき) </p>>
+        <img src="scissors.png" class="move-icon" />
+        <p class="move-description">Gon uses Transmutation to transform his aura <br> into a long blade of aura extending from the two fingers</p>
+
+    </button>
+    <p></p>
+    <p class="player-move"> </p>
+    <p class="computer-move"> </p>
+    <p class="result"></p>
+    <button onclick="resetScore()" class="reset-button">Reset Score</button>
+    <p class="score-record"> The current score is :<br> Human Player: <span id="humanScore">0</span> <br> Compute: <span id="computerScore">0</span> <br> Ties: <span id="ties">0</span></p>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
